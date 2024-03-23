@@ -13,8 +13,8 @@ app.get("/api/video/:id", async (req, res) => {
  
     ytdl.getInfo(video_url).then(info => { 
         
-     let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio', filter: 'audioonly' });
-        res.send( info );   
+     let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'lowestaudio' , filter: 'audioonly' });
+     res.send( audioFormat.url );   
     });
 });
 const port = process.env.PORT || 5000; 
