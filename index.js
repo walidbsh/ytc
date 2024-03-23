@@ -23,7 +23,7 @@ app.get("/api/video/:id", async (req, res) => {
     });
     else{
      //res.send("test working");
-     let metadata = await ytDlpWrap.getVideoInfo('https://www.youtube.com/watch?v=aqz-KE-bpKQ');
+     let metadata = await ytdl.getVideoInfo('https://www.youtube.com/watch?v=aqz-KE-bpKQ');
      res.send(metadata.title);
      
     }
