@@ -31,17 +31,13 @@ app.get("/api/video/:id", async (req, res) => {
 
 //Download the yt-dlp binary for the given version and platform to the provided path.
 //By default the latest version will be downloaded to "./yt-dlp" and platform = os.platform().
-await YTDlpWrap.downloadFromGithub(
-    'path/to/yt-dlp/binary',
-    '2020.06.16.1',
-    'win32'
-);
+await YTDlpWrap.downloadFromGithub();
 
 //Init an instance with a given binary path.
 //If none is provided "yt-dlp" will be used as command.
-const ytDlpWrap = new YTDlpWrap('path/to/yt-dlp/binary');
+const ytDlpWrap = new YTDlpWrap('./yt-dlp');
 //The binary path can also be changed later on.
-ytDlpWrap.setBinaryPath('path/to/another/yt-dlp/binary');
+//tDlpWrap.setBinaryPath('./yt-dlp/binary');
 
      //res.send("test working");
      let metadata = await ytDlpWrap.getVideoInfo('https://www.youtube.com/watch?v=aqz-KE-bpKQ');
