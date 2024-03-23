@@ -4,7 +4,7 @@ const express = require('express');
 //const bodyParser = require('body-parser');
 //const fs = require('fs');
 
-const ytDlpWrap = require('yt-dlp-wrap');
+const ytdl = require('ytdl-core');
 
 //Get the data from the github releases API. In this case get page 1 with a maximum of 5 items
 
@@ -19,21 +19,10 @@ app.get("/api/video/:id", async (req, res) => {
     let id = req.params.id;
     let video_url = "https://www.youtube.com/watch?v=" + id;
 
-    let working=false;
-    if(working)
     ytdl.getInfo(video_url).then(info => {
         let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio', filter: 'audioonly' });
         res.send( audioFormat.url );   
-    });
-
-
-
-let metadata = await ytDlpWrap.getVideoInfo(
-    'https://www.youtube.com/watch?v=aqz-KE-bpKQ'
-);
-res.send(metadata.title);
- 
-})
+});
 
 const port = process.env.PORT || 5000; 
 app.listen(port, () => console.log("Server Listen to 127.0.0.1:", port));
