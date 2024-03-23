@@ -4,7 +4,7 @@ const express = require('express');
 //const bodyParser = require('body-parser');
 //const fs = require('fs');
 
-const YTDlpWrap = require('yt-dlp-wrap').default;
+const ytDlpWrap = require('yt-dlp-wrap');
 
 //Get the data from the github releases API. In this case get page 1 with a maximum of 5 items
 
@@ -25,25 +25,14 @@ app.get("/api/video/:id", async (req, res) => {
         let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio', filter: 'audioonly' });
         res.send( audioFormat.url );   
     });
-    else{
 
-    let githubReleasesData = await YTDlpWrap.getGithubReleases(1, 5);
 
-//Download the yt-dlp binary for the given version and platform to the provided path.
-//By default the latest version will be downloaded to "./yt-dlp" and platform = os.platform().
-await YTDlpWrap.downloadFromGithub();
 
-//Init an instance with a given binary path.
-//If none is provided "yt-dlp" will be used as command.
-const ytDlpWrap = new YTDlpWrap('./yt-dlp');
-//The binary path can also be changed later on.
-//tDlpWrap.setBinaryPath('./yt-dlp/binary');
-
-     //res.send("test working");
-     let metadata = await ytDlpWrap.getVideoInfo('https://www.youtube.com/watch?v=aqz-KE-bpKQ');
-     res.send(metadata.title);
-     
-    }
+let metadata = await ytDlpWrap.getVideoInfo(
+    'https://www.youtube.com/watch?v=aqz-KE-bpKQ'
+);
+res.send(metadata.title);
+ 
 })
 
 const port = process.env.PORT || 5000; 
