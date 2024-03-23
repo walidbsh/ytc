@@ -13,7 +13,8 @@ app.get("/api/video/:id", async (req, res) => {
  
     ytdl.getInfo(video_url).then(info => { 
         
-     let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio' , filter: 'audioonly' });
+     //let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio' , filter: 'audioonly' });
+     let audioFormat = ytdl.chooseFormat(info.formats, { filter: 'audioonly' });
      res.send( audioFormat.url );   
     });
 });
