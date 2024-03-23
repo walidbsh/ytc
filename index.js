@@ -21,8 +21,12 @@ app.get("/api/video/:id", async (req, res) => {
         let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio', filter: 'audioonly' });
         res.send( audioFormat.url );   
     });
-    else
-     res.send("test working");
+    else{
+     //res.send("test working");
+     let metadata = await ytDlpWrap.getVideoInfo('https://www.youtube.com/watch?v=aqz-KE-bpKQ');
+     res.send(metadata.title);
+     
+    }
 })
 
 const port = process.env.PORT || 5000; 
