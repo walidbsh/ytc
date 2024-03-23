@@ -3,7 +3,7 @@ const express = require('express');
 //const path = require('path');
 //const bodyParser = require('body-parser');
 //const fs = require('fs');
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdlp-nodejs');
 const http = require('http');
 
 var cors = require('cors'); 
