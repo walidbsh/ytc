@@ -9,10 +9,12 @@ const app = express();
 app.use(cors());
 app.get("/api/video/:id", async (req, res) => { 
     let id = req.params.id;
-    let video_url = "https://www.youtube.com/watch?v=" + id;
-
-    ytdl.getInfo(video_url).then(info => { let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio', filter: 'audioonly' });
-        res.send( audioFormat.url );   
+    let video_url = "https://www.youtube.com/watch?v=" + id
+ 
+    ytdl.getInfo(video_url).then(info => { 
+        
+     let audioFormat = ytdl.chooseFormat(info.formats, {quality: 'highestaudio', filter: 'audioonly' });
+        res.send( info );   
     });
 });
 const port = process.env.PORT || 5000; 
