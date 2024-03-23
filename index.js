@@ -3,7 +3,33 @@ const express = require('express');
 //const path = require('path');
 //const bodyParser = require('body-parser');
 //const fs = require('fs');
-const ytdl = require('yt-dlp-wrap');
+
+const YTDlpWrap = require('yt-dlp-wrap').default;
+
+//Get the data from the github releases API. In this case get page 1 with a maximum of 5 items.
+let githubReleasesData = await YTDlpWrap.getGithubReleases(1, 5);
+
+//Download the yt-dlp binary for the given version and platform to the provided path.
+//By default the latest version will be downloaded to "./yt-dlp" and platform = os.platform().
+await YTDlpWrap.downloadFromGithub(
+    'path/to/yt-dlp/binary',
+    '2020.06.16.1',
+    'win32'
+);
+
+//Init an instance with a given binary path.
+//If none is provided "yt-dlp" will be used as command.
+const ytDlpWrap = new YTDlpWrap('path/to/yt-dlp/binary');
+//The binary path can also be changed later on.
+ytDlpWrap.setBinaryPath('path/to/another/yt-dlp/binary');
+
+
+
+
+
+
+
+
 const http = require('http');
 
 var cors = require('cors'); 
@@ -23,7 +49,7 @@ app.get("/api/video/:id", async (req, res) => {
     });
     else{
      //res.send("test working");
-     let metadata = await ytdl.getVideoInfo('https://www.youtube.com/watch?v=aqz-KE-bpKQ');
+     let metadata = await ytDlpWrap.getVideoInfo('https://www.youtube.com/watch?v=aqz-KE-bpKQ');
      res.send(metadata.title);
      
     }
